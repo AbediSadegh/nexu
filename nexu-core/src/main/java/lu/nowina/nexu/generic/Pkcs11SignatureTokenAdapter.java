@@ -84,7 +84,8 @@ public class Pkcs11SignatureTokenAdapter extends Pkcs11SignatureToken {
             LOG.debug("PKCS11 Config : \n{}", configString);
 
             try (ByteArrayInputStream confStream = new ByteArrayInputStream(configString.getBytes("ISO-8859-1"))) {
-                final sun.security.pkcs11.SunPKCS11 sunPKCS11 = new sun.security.pkcs11.SunPKCS11(confStream);
+                final sun.security.pkcs11.SunPKCS11 sunPKCS11 = new sun.security.pkcs11.SunPKCS11();
+                sunPKCS11.configure(configString);
                 // we need to add the provider to be able to sign later
                 Security.addProvider(sunPKCS11);
                 this.provider = sunPKCS11;
